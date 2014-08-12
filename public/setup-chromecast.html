@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="GScreen" ng-controller="Receiver">
+  <head>
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/channel.css">
+    <script src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
+    <script src="/js/vendor/castaway.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/vendor/jquery.js"></script>
+    <script src="/js/vendor/underscore.js"></script>
+    <script src="/js/vendor/angular.js"></script>
+    <script src="/js/vendor/angular-route.js"></script>
+    <script src="/js/vendor/angular-resource.js"></script>
+    <script src="/js/gscreen.js"></script>
+  </head>
+  <body class="setup">
+    <div class="template-full-screen widescreen">
+      <div class="main-window">
+        <h1 ng-hide="channelUrl">Setting Up Chromecast</h1>
+        <iframe ng-show="channelUrl" src="{{ channelUrl }}"></iframe>
+
+        <div ng-show="chromecast.alert" class="alert {{ chromecast.alert.style }}">{{ chromecast.alert.text }}</div>
+
+        <div ng-show="chromecast.name" class="channel-overlay">{{ chromecast.name }}</div>
+
+      </div>
+    </div>
+  </body>
+</html>

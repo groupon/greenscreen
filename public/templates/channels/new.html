@@ -1,0 +1,12 @@
+<section class="channels-new" ng-controller="ChannelForm">
+  <h2>New Channel</h2>
+
+  <form name="channelForm" class="channel-form" ng-submit="onFormSubmit()">
+    <div ng-include="'/templates/channels/fields.html'"></div>
+    <div class="submit-buttons">
+      <input type="submit" name="submit" value="Add Channel">
+      <a href="/channels" class="btn btn-cancel">Cancel</a>
+    </div>
+  </form>
+</section>
+

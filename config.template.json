@@ -1,0 +1,10 @@
+{
+  "couch": {
+    "host": "http://localhost",
+    "port": 5984,
+    "db": "gscreen"
+  },
+  "server": {
+    "port": 4994
+  }
+}
