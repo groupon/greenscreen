@@ -1,4 +1,4 @@
-# GScreen
+# Greenscreen
 
 A digital signage solution using the Web and Chromecast devices.
 
