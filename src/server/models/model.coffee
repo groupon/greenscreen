@@ -12,39 +12,41 @@ Redistribution and use in source and binary forms, with or without modification,
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.###
 
-cradle = require "cradle"
-views = require "./couch-db-views"
-validations = require "./couch-db-validations"
+db = require "../db"
+_ = require "underscore"
 
-module.exports = class CouchDB
-  constructor: (config) ->
-    @couch = new cradle.Connection config.host, config.port
-    @db = @couch.database config.db
-    @ensureDbExists =>
-      @installDesignDoc()
-
-  ensureDbExists: (cb) ->
-    console.log "Ensuring DB Exists..."
-    @db.exists (err, exists) =>
-      return cb() if exists
-      console.log "Creating DB..."
-      @db.create cb
-
-  installDesignDoc: (cb) ->
-    console.log "Creating Design Doc..."
-    @db.save "_design/gscreen",
-      views: views
-      validate_doc_update: validations
-
-  allWithType: (type, cb) ->
-    @db.view "gscreen/byType", key: type, include_docs: true, (err, rows) ->
+module.exports = class Model
+  @all: (cb) ->
+    db.allWithType @type, (err, docs) =>
       return cb(err) if err
-      # This next line looks crazy, and it is. Believe it or not, the cradle lib
-      # overrides the `map` function to map over the docs, not the rows. This means
-      # that the result is an array of docs, rather than an array of rows, which is
-      # what we want. Very strange design choice on cradle's part.
-      cb(null, rows.map (doc) -> doc)
+      channels = docs.map (doc) => new this(doc)
+      cb(null, channels)
 
-  get: (args...) -> @db.get(args...)
-  save: (args...) -> @db.save(args...)
-  remove: (args...) -> @db.remove(args...)
+  @findById: (id, cb) ->
+    db.get id, (err, doc) =>
+      return cb(err) if err
+      cb(null, new this(doc))
+
+  save: (cb=->) ->
+    attrs = {}
+    for own k,v of this
+      if !_(["id", "rev"]).contains(k) && !/^\$/.test k
+        attrs[k] = v
+    if @id
+      db.save @id, @rev, attrs, (err, res) ->
+        return cb(err) if err
+        @rev = res.rev
+        cb()
+    else
+      db.save attrs, (err, res) =>
+        return cb(err) if err
+        @id = res.id
+        @rev = res.rev
+        cb()
+
+  update: (data, cb=->) ->
+    this[k] = v for k,v of data
+    @save(cb)
+
+  destroy: (cb=->) ->
+    db.remove @id, @rev, cb

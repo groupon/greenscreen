@@ -12,41 +12,43 @@ Redistribution and use in source and binary forms, with or without modification,
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.###
 
-db = require "./db"
 _ = require "underscore"
+Alert = require "./alert"
+Channel = require "./channel"
+Model = require "./model"
+Takeover = require "./takeover"
+db = require "../db"
 
-module.exports = class Model
+module.exports = class Receiver extends Model
+  @type: "receiver"
+
   @all: (cb) ->
     db.allWithType @type, (err, docs) =>
       return cb(err) if err
-      channels = docs.map (doc) => new this(doc)
-      cb(null, channels)
+      receivers = docs.map (doc) => new this(doc)
+      Channel.all (err, channels) ->
+        return cb(err) if err
+        receivers.forEach (r) ->
+          r.channelName = _(channels).detect((ch) -> ch.id == r.channelId)?.name
+        cb null, receivers
 
   @findById: (id, cb) ->
     db.get id, (err, doc) =>
       return cb(err) if err
-      cb(null, new this(doc))
+      receiver = new Receiver(doc)
+      Takeover.singleton (err, takeover) ->
+        receiver.channelId = takeover.channelId if takeover
+        Alert.forReceiver receiver, (err, alert) ->
+          return cb(err) if err
+          receiver.alert = alert
+          cb null, receiver
 
-  save: (cb=->) ->
-    attrs = {}
-    for own k,v of this
-      if !_(["id", "rev"]).contains(k) && !/^\$/.test k
-        attrs[k] = v
-    if @id
-      db.save @id, @rev, attrs, (err, res) ->
-        return cb(err) if err
-        @rev = res.rev
-        cb()
-    else
-      db.save attrs, (err, res) =>
-        return cb(err) if err
-        @id = res.id
-        @rev = res.rev
-        cb()
+  constructor: (data={}) ->
+    @type = "receiver"
+    @id = data.id || data._id
+    @rev = data._rev
+    @name = data.name
+    @location = data.location
+    @groups = data.groups || []
+    @channelId = data.channelId
 
-  update: (data, cb=->) ->
-    this[k] = v for k,v of data
-    @save(cb)
-
-  destroy: (cb=->) ->
-    db.remove @id, @rev, cb

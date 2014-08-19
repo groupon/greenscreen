@@ -12,24 +12,39 @@ Redistribution and use in source and binary forms, with or without modification,
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.###
 
-Model = require "./model"
-db = require "./db"
+cradle = require "cradle"
+views = require "./views"
+validations = require "./validations"
 
-module.exports = class Alert extends Model
-  @type: "alert"
+module.exports = class CouchDB
+  constructor: (config) ->
+    @couch = new cradle.Connection config.host, config.port
+    @db = @couch.database config.db
+    @ensureDbExists =>
+      @installDesignDoc()
 
-  @forReceiver: (receiver, cb) ->
-    db.allWithType @type, (err, docs) ->
+  ensureDbExists: (cb) ->
+    console.log "Ensuring DB Exists..."
+    @db.exists (err, exists) =>
+      return cb() if exists
+      console.log "Creating DB..."
+      @db.create cb
+
+  installDesignDoc: (cb) ->
+    console.log "Creating Design Doc..."
+    @db.save "_design/gscreen",
+      views: views
+      validate_doc_update: validations
+
+  allWithType: (type, cb) ->
+    @db.view "gscreen/byType", key: type, include_docs: true, (err, rows) ->
       return cb(err) if err
-      return cb(null, null) if docs.length == 0
-      doc = docs[docs.length - 1]
-      cb null, doc
+      # This next line looks crazy, and it is. Believe it or not, the cradle lib
+      # overrides the `map` function to map over the docs, not the rows. This means
+      # that the result is an array of docs, rather than an array of rows, which is
+      # what we want. Very strange design choice on cradle's part.
+      cb(null, rows.map (doc) -> doc)
 
-  constructor: (data={}) ->
-    @type = "alert"
-    @id = data.id || data._id
-    @rev = data._rev
-    @style = data.style || "default"
-    @duration = data.duration || 60
-    @text = data.text
-    @expiresAt = data.expiresAt
+  get: (args...) -> @db.get(args...)
+  save: (args...) -> @db.save(args...)
+  remove: (args...) -> @db.remove(args...)
