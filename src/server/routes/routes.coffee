@@ -12,30 +12,21 @@ Redistribution and use in source and binary forms, with or without modification,
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.###
 
-http = require "http"
-express = require "express"
-morgan = require "morgan"
-bodyParser = require "body-parser"
-methodOverride = require "method-override"
-config = require "./config"
-api = require("./routes/api")
-routes = require "./routes/routes"
-socketIO = require "socket.io"
+pathLib = require "path"
 
-app = express()
-server = http.createServer app
-sockets = socketIO(server)
+module.exports = (app) ->
+  app.get "/chromecasts/new", (req, res) ->
+    res.sendfile pathLib.resolve("#{__dirname}/../../../public/index.html")
 
-app.use morgan('dev')
-app.use bodyParser.urlencoded
-  extended: true
-app.use bodyParser.json()
-app.use methodOverride()
-app.use express.static("#{__dirname}/../../public")
+  app.get "/chromecasts/:id", (req, res) ->
+    res.sendfile pathLib.resolve("#{__dirname}/../../../public/setup-chromecast.html")
 
-api(app, sockets)
-routes(app)
+  app.get "/channels/new", (req, res) ->
+    res.sendfile pathLib.resolve("#{__dirname}/../../../public/index.html")
 
-port = process.env.PORT || config.server?.port || 4994
-server.listen port
-console.log "GScreen is listening to localhost:#{port}"
+  app.get "/channels/:id", (req, res) ->
+    res.sendfile pathLib.resolve("#{__dirname}/../../../public/channel.html")
+
+  # Wildcard all GET routes, send to the Angular app
+  app.get "*", (req, res) ->
+    res.sendfile pathLib.resolve("#{__dirname}/../../../public/index.html")

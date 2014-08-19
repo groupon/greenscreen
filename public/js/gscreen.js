@@ -35,7 +35,7 @@
       var cwd = '/';
       return {
         title: 'browser',
-        version: 'v0.10.28',
+        version: 'v0.10.29',
         browser: true,
         env: {},
         argv: [],
@@ -289,10 +289,7 @@
       var resource;
       resource = $resource('/api/takeover', null, {
         update: { method: 'PUT' },
-        remove: {
-          method: 'POST',
-          url: '/api/takeover/remove'
-        }
+        remove: { method: 'DELETE' }
       });
       return {
         get: function (id) {
