@@ -16,11 +16,6 @@ angular.module("GScreen").factory "Alert", ($resource) ->
   resource = $resource "/api/alerts/:id", null,
     update:
       method: "PUT"
-    remove:
-      method: "POST"
-      url: "/api/alerts/:id/remove"
-      params:
-        id: "@id"
 
   get: (id) ->
     resource.get id: id

@@ -287,10 +287,7 @@
   require.define('/src/client/resources/takeover.coffee', function (module, exports, __dirname, __filename) {
     angular.module('GScreen').factory('Takeover', function ($resource) {
       var resource;
-      resource = $resource('/api/takeover', null, {
-        update: { method: 'PUT' },
-        remove: { method: 'DELETE' }
-      });
+      resource = $resource('/api/takeover', null, { update: { method: 'PUT' } });
       return {
         get: function (id) {
           return resource.get();
@@ -317,10 +314,7 @@
   require.define('/src/client/resources/chromecast.coffee', function (module, exports, __dirname, __filename) {
     angular.module('GScreen').factory('Chromecast', function ($resource) {
       var resource;
-      resource = $resource('/api/receivers/:id', null, {
-        update: { method: 'PUT' },
-        remove: { method: 'DELETE' }
-      });
+      resource = $resource('/api/receivers/:id', null, { update: { method: 'PUT' } });
       return {
         get: function (id) {
           return resource.get({ id: id });
@@ -353,10 +347,7 @@
   require.define('/src/client/resources/channel.coffee', function (module, exports, __dirname, __filename) {
     angular.module('GScreen').factory('Channel', function ($resource) {
       var resource;
-      resource = $resource('/api/channels/:id', null, {
-        update: { method: 'PUT' },
-        remove: { method: 'DELETE' }
-      });
+      resource = $resource('/api/channels/:id', null, { update: { method: 'PUT' } });
       return {
         get: function (id) {
           return resource.get({ id: id });
@@ -387,14 +378,7 @@
   require.define('/src/client/resources/alert.coffee', function (module, exports, __dirname, __filename) {
     angular.module('GScreen').factory('Alert', function ($resource) {
       var resource;
-      resource = $resource('/api/alerts/:id', null, {
-        update: { method: 'PUT' },
-        remove: {
-          method: 'POST',
-          url: '/api/alerts/:id/remove',
-          params: { id: '@id' }
-        }
-      });
+      resource = $resource('/api/alerts/:id', null, { update: { method: 'PUT' } });
       return {
         get: function (id) {
           return resource.get({ id: id });

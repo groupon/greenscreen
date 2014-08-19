@@ -16,8 +16,6 @@ angular.module("GScreen").factory "Chromecast", ($resource) ->
   resource = $resource "/api/receivers/:id", null,
     update:
       method: "PUT"
-    remove:
-      method: "DELETE"
 
   get: (id) ->
     resource.get id: id
