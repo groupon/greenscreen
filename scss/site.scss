@@ -1,0 +1,231 @@
+$green: rgb(46, 204, 113);
+$red: rgb(231, 76, 60);
+$blue: rgb(52, 152, 219);
+$tv-color: #282828;
+$font-stack: 'Open Sans', 'Helvetic Neue', 'Helvetica', sans-serif;
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin bold() {
+  font-weight: 700;
+}
+
+.red {
+  color: $red;
+}
+
+.groupon {
+  color: #82b548;
+  @include bold();
+}
+
+body,
+html,
+button {
+  font-family: $font-stack;
+    font-weight: 300;
+}
+
+body,
+html {
+  padding: 0;
+  margin: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: $green;
+
+
+}
+
+
+.screens {
+  $gutter: 24px;
+  margin-top: $gutter * 3.5;
+  text-align: center;
+  .screen {
+    display: inline-block;
+    position: relative;
+    background: $tv-color;
+    height: 25vh;
+    width: 25%;
+    min-width: 25vh;
+    margin: $gutter;
+    border: 8px solid $tv-color;
+    @include border-radius(4px);
+
+    .content {
+      position: absolute;
+      background: white;
+      height: 100%;
+      width: 100%;
+
+      &.nyan {
+        background: red;
+      }
+
+      &.stocks {
+        background: blue;
+      }
+
+      &.news {
+        background: green;
+      }
+
+      &.pres {
+        background: blueviolet;
+      }
+
+      &.analytics {
+        background: purple;
+      }
+
+      &.meta {
+        background: orange;
+      }
+
+    }
+
+    .label {
+      @include bold;
+      position: absolute;
+        bottom: 0; right: 0;
+      opacity: .8;
+      padding: 6px 12px;
+      text-align: right;
+    }
+
+    .stand {
+      position: absolute;
+        bottom: -20px; left: 50%;
+      background: $tv-color;
+      width: 20px;
+      margin-left: -10px;
+      height: 12px;
+
+      &::after {
+        display: block;
+        position: absolute;
+          bottom: 0; left: 50%;
+        content: '';
+        background: $tv-color;
+        width: 100px;
+        margin-left: -50px;
+        height: 4px;
+      }
+    }
+  }
+
+}
+
+
+button.push {
+  background: white;
+  color: $green;
+  min-width: 300px;
+  padding: 20px;
+  font-size: 1.5em;
+    font-weight: 700;
+  text-transform: uppercase;
+
+  border: none;
+  border-bottom: 6px solid #e1e1e1;
+
+  @include border-radius(2px);
+
+  &:active {
+    margin-top: 6px;
+    border-bottom: 0;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &.red {
+    background: $red;
+    color: white;
+    border-color: lighten($red, 10);
+  }
+
+  &.blue {
+    background: $blue;
+    color: white;
+    border-color: lighten($blue, 10);
+  }
+
+  &.white {
+    background: white;
+    color: $green;
+  }
+}
+
+section {
+  position: relative;
+  min-height: 600px;
+  padding: 4em;
+
+
+}
+
+section#splash {
+  color: white;
+
+  header {
+    text-align: center;
+
+    .title {
+      font-size: 5em;
+      font-weight: 600;
+    }
+    .subtitle {
+      font-size: 2.5em;
+    }
+
+  }
+}
+
+section#channels {
+  background: white;
+  header {
+    text-align: center;
+
+    .title {
+      font-size: 4em;
+    }
+
+    .subtitle {
+      font-size: 1.2em;
+    }
+  }
+}
+
+section#mass-actions {
+  background: #e6e6e6;
+  text-align: center;
+  header {
+    text-align: center;
+
+    .title {
+      font-size: 4em;
+    }
+
+    .subtitle {
+      font-size: 1.2em;
+    }
+  }
+}
+
+footer {
+  background: #2d2d2d;
+  color: white;
+  padding: 36px;
+  text-align: center;
+  font-size: 1.3em;
+}
