@@ -65,7 +65,7 @@ html {
   background: #2ecc71; }
 
 .screens {
-  margin-top: 72px;
+  margin-top: 48px;
   text-align: center; }
   .screens .screen {
     display: inline-block;
@@ -74,6 +74,7 @@ html {
     height: 25vh;
     width: 25%;
     min-width: 25vh;
+    min-height: 200px;
     margin: 24px;
     border: 8px solid #282828;
     -webkit-border-radius: 4px;
@@ -94,15 +95,15 @@ html {
         background: url(../assets/images/nyan.gif) no-repeat center center !important;
         background-size: cover; }
       .screens .screen .content.weather {
-        background: grey; }
+        background: #1abc9c; }
       .screens .screen .content.stocks {
-        background: blue; }
+        background: #9b59b6; }
       .screens .screen .content.news {
-        background: green; }
+        background: #e67e22; }
       .screens .screen .content.analytics {
-        background: purple; }
+        background: #3498db; }
       .screens .screen .content.meta {
-        background: orange; }
+        background: #34495e; }
     .screens .screen .alert {
       display: none;
       position: absolute;
@@ -114,7 +115,7 @@ html {
       text-align: left;
       font-weight: 700; }
       .screens .screen .alert::after {
-        content: "Danger!"; }
+        content: "I am the danger!"; }
       .screens .screen .alert.show {
         display: block; }
     .screens .screen .label {
@@ -147,7 +148,7 @@ html {
 
 section {
   position: relative;
-  min-height: 600px;
+  min-height: 300px;
   padding: 4em; }
 
 section#splash {
@@ -171,7 +172,7 @@ section#channels {
       font-size: 1.2em; }
 
 section#mass-actions {
-  background: #e6e6e6;
+  background: #ebebeb;
   text-align: center; }
   section#mass-actions header {
     text-align: center; }
@@ -179,6 +180,13 @@ section#mass-actions {
       font-size: 4em; }
     section#mass-actions header .subtitle {
       font-size: 1.2em; }
+
+section#final {
+  text-align: center;
+  color: white;
+  height: 10%; }
+  section#final header .title {
+    font-size: 3em; }
 
 footer {
   background: #2d2d2d;

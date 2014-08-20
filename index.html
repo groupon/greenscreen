@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <title>Greenscreen</title>
 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <!-- PURE -->
   <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
 
@@ -49,7 +51,7 @@
     <button class="push
                    wow fadeIn"
          onclick="location.href='http://github.com/groupon/greenscreen'"
-         data-wow-delay="1.5s">
+         data-wow-delay="1s">
       View on Github <i class="fa fa-github"></i>
     </button>
 
@@ -70,7 +72,7 @@
         id="gscreen-2"
         class="screen wow fadeInUp"
         data-wow-delay=".3s">
-      <div class="weather content"></div>
+      <div class="analytics content"></div>
       <div class="alert"></div>
       <div class="label">Greenscreen 2</div>
       <div class="stand"></div>
@@ -105,7 +107,7 @@
     <div
         id="gscreen-4"
         class="screen wow fadeIn"
-        data-wow-delay=".0s">
+        data-wow-delay="0s">
       <div class="weather content"></div>
       <div class="alert"></div>
       <div class="label">Greenscreen 4</div>
@@ -115,12 +117,20 @@
   </div>
 
   <br>
+  <select class="greenscreen select">
+    <option value="1">Greenscreen 1</option>
+    <option value="2">Greenscreen 2</option>
+    <option value="3">Greenscreen 3</option>
+    <option value="4" selected>Greenscreen 4</option>
+    <option value="5">Greenscreen 5</option>
+    <option value="6">Greenscreen 6</option>
+    <option value="7">Greenscreen 7</option>
+  </select>
   <select class="channel select">
-    <option>Select a Channel</option>
     <option value="news">NEWS</option>
     <option value="stocks">STOCKS</option>
     <option value="analytics">ANALYTICS</option>
-    <option value="weather">WEATHER</option>
+    <option value="weather" selected>WEATHER</option>
     <option value="meta">GREENSCREEN</option>
   </select>
 
@@ -184,8 +194,26 @@
 
 </section>
 
+<section id="final">
+  <br>
+  <br>
+  <header>
+    <div class="title">
+      Check it out now!
+    </div>
+  </header>
+
+  <br>
+  <br>
+
+  <button class="push"
+     onclick="location.href='http://github.com/groupon/greenscreen'">
+    View on Github <i class="fa fa-github"></i>
+  </button>
+</section>
+
 <footer>
-  Made with <i class="red fa fa-heart"></i> by <span class="groupon">GROUPON</span>
+  Made with <i class="red fa fa-heart"></i> at <span class="groupon">GROUPON</span>
 </footer>
 
 </body>

@@ -1,9 +1,16 @@
 @import 'select';
 @import 'push_buttons';
 
+$lightgray: #ebebeb;
 $green: rgb(46, 204, 113);
 $red: rgb(231, 76, 60);
 $blue: rgb(52, 152, 219);
+$wet-asphalt: rgb(52, 73, 94);
+$amethyst: rgb(155, 89, 182);
+$carrot: rgb(230, 126, 34);
+$sunflower: rgb(241, 196, 15);
+$turqoise: rgb(26, 188, 156);
+
 $tv-color: #282828;
 $font-stack: 'Open Sans', 'Helvetic Neue', 'Helvetica', sans-serif;
 
@@ -58,7 +65,7 @@ html {
 
 .screens {
   $gutter: 24px;
-  margin-top: $gutter * 3;
+  margin-top: $gutter * 2;
   text-align: center;
   .screen {
     display: inline-block;
@@ -67,6 +74,7 @@ html {
     height: 25vh;
     width: 25%;
     min-width: 25vh;
+    min-height: 200px;
     margin: $gutter;
     border: 8px solid $tv-color;
     @include border-radius(4px);
@@ -85,23 +93,23 @@ html {
       }
 
       &.weather {
-        background: grey;
+        background: $turqoise;
       }
 
       &.stocks {
-        background: blue;
+        background: $amethyst;
       }
 
       &.news {
-        background: green;
+        background: $carrot;
       }
 
       &.analytics {
-        background: purple;
+        background: $blue;
       }
 
       &.meta {
-        background: orange;
+        background: $wet-asphalt;
       }
 
     }
@@ -118,7 +126,7 @@ html {
       @include bold;
 
       &::after {
-        content: 'Danger!'
+        content: 'I am the danger!'
       }
 
       &.show {
@@ -164,10 +172,8 @@ html {
 
 section {
   position: relative;
-  min-height: 600px;
+  min-height: 300px;
   padding: 4em;
-
-
 }
 
 section#splash {
@@ -204,7 +210,7 @@ section#channels {
 }
 
 section#mass-actions {
-  background: #e6e6e6;
+  background: $lightgray;
   text-align: center;
   header {
     text-align: center;
@@ -215,6 +221,18 @@ section#mass-actions {
 
     .subtitle {
       font-size: 1.2em;
+    }
+  }
+}
+
+section#final {
+  text-align: center;
+  color: white;
+  height: 10%;
+
+  header {
+    .title {
+      font-size: 3em;
     }
   }
 }

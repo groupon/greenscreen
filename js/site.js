@@ -30,7 +30,7 @@ $(document).ready(function(){
 
   $('select.channel').change(function(e){
     var value = e.target.value;
-    change(4, value);
+    change($('select.greenscreen').val(), value);
   })
 
 });
