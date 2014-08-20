@@ -1,3 +1,6 @@
+@import 'select';
+@import 'push_buttons';
+
 $green: rgb(46, 204, 113);
 $red: rgb(231, 76, 60);
 $blue: rgb(52, 152, 219);
@@ -9,6 +12,14 @@ $font-stack: 'Open Sans', 'Helvetic Neue', 'Helvetica', sans-serif;
   -moz-border-radius: $radius;
   -ms-border-radius: $radius;
   border-radius: $radius;
+}
+
+@mixin transition-all($duration) {
+  -webkit-transition: all $duration;
+  -moz-transition: all $duration;
+  -ms-transition: all $duration;
+  -o-transition: all $duration;
+  transition: all $duration;
 }
 
 @mixin bold() {
@@ -26,7 +37,8 @@ $font-stack: 'Open Sans', 'Helvetic Neue', 'Helvetica', sans-serif;
 
 body,
 html,
-button {
+button,
+select {
   font-family: $font-stack;
     font-weight: 300;
 }
@@ -41,13 +53,12 @@ html {
 
   background: $green;
 
-
 }
 
 
 .screens {
   $gutter: 24px;
-  margin-top: $gutter * 3.5;
+  margin-top: $gutter * 3;
   text-align: center;
   .screen {
     display: inline-block;
@@ -66,8 +77,14 @@ html {
       height: 100%;
       width: 100%;
 
+      @include transition-all(.2s);
+
       &.nyan {
-        background: red;
+        background: red !important;
+      }
+
+      &.weather {
+        background: grey;
       }
 
       &.stocks {
@@ -76,10 +93,6 @@ html {
 
       &.news {
         background: green;
-      }
-
-      &.pres {
-        background: blueviolet;
       }
 
       &.analytics {
@@ -92,10 +105,31 @@ html {
 
     }
 
+    .alert {
+      display: none;
+      position: absolute;
+        bottom: 0;
+      width: calc(100% - 12px);
+      background: $red;
+      color: white;
+      padding: 6px;
+      text-align: left;
+      @include bold;
+
+      &::after {
+        content: 'Danger!'
+      }
+
+      &.show {
+        display: block;
+      }
+    }
+
     .label {
       @include bold;
       position: absolute;
         bottom: 0; right: 0;
+      color: white;
       opacity: .8;
       padding: 6px 12px;
       text-align: right;
@@ -125,46 +159,7 @@ html {
 }
 
 
-button.push {
-  background: white;
-  color: $green;
-  min-width: 300px;
-  padding: 20px;
-  font-size: 1.5em;
-    font-weight: 700;
-  text-transform: uppercase;
 
-  border: none;
-  border-bottom: 6px solid #e1e1e1;
-
-  @include border-radius(2px);
-
-  &:active {
-    margin-top: 6px;
-    border-bottom: 0;
-  }
-
-  &:focus {
-    outline: none;
-  }
-
-  &.red {
-    background: $red;
-    color: white;
-    border-color: lighten($red, 10);
-  }
-
-  &.blue {
-    background: $blue;
-    color: white;
-    border-color: lighten($blue, 10);
-  }
-
-  &.white {
-    background: white;
-    color: $green;
-  }
-}
 
 section {
   position: relative;
@@ -193,6 +188,7 @@ section#splash {
 
 section#channels {
   background: white;
+  text-align: center;
   header {
     text-align: center;
 

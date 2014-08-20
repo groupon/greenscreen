@@ -56,23 +56,32 @@
   </header>
 
   <div class="screens">
-    <div class="screen wow fadeInUp"
-         data-wow-delay=".0s">
-      <div class="nyan content"></div>
+    <div
+        id="gscreen-1"
+        class="screen wow fadeInUp"
+        data-wow-delay="0s">
+      <div class="news content"></div>
+      <div class="alert"></div>
       <div class="label">Greenscreen 1</div>
       <div class="stand"></div>
     </div>
 
-    <div class="screen wow fadeInUp"
+    <div
+        id="gscreen-2"
+        class="screen wow fadeInUp"
         data-wow-delay=".3s">
-      <div class="pres content"></div>
+      <div class="weather content"></div>
+      <div class="alert"></div>
       <div class="label">Greenscreen 2</div>
       <div class="stand"></div>
     </div>
 
-    <div class="screen wow fadeInUp"
-         data-wow-delay=".6s">
+    <div
+        id="gscreen-3"
+        class="screen wow fadeInUp"
+        data-wow-delay=".6s">
       <div class="meta content"></div>
+      <div class="alert"></div>
       <div class="label">Greenscreen 3</div>
       <div class="stand"></div>
     </div>
@@ -92,8 +101,28 @@
     </div>
   </header>
 
+  <div class="screens">
+    <div
+        id="gscreen-4"
+        class="screen wow fadeIn"
+        data-wow-delay=".0s">
+      <div class="weather content"></div>
+      <div class="alert"></div>
+      <div class="label">Greenscreen 4</div>
+      <div class="stand"></div>
+    </div>
 
+  </div>
 
+  <br>
+  <select class="channel select">
+    <option>Select a Channel</option>
+    <option value="news">NEWS</option>
+    <option value="stocks">STOCKS</option>
+    <option value="analytics">ANALYTICS</option>
+    <option value="weather">WEATHER</option>
+    <option value="meta">GREENSCREEN</option>
+  </select>
 
 </section>
 
@@ -111,34 +140,43 @@
   <br>
   <br>
 
-  <button class="red push">
+  <button class="red push" onclick="alert()">
     ALERT!
   </button>
   <br>
   <br>
-  <button class="blue push">
+  <button class="blue push" onclick="takeover()">
     TAKEOVER
   </button>
 
   <div class="screens">
-    <div class="screen wow fadeIn"
-         data-wow-delay=".0s">
-      <div class="nyan content"></div>
-      <div class="label">Greenscreen 1</div>
+    <div
+        id="gscreen-5"
+        class="screen wow fadeIn"
+        data-wow-delay=".0s">
+      <div class="stocks content"></div>
+      <div class="alert"></div>
+      <div class="label">Greenscreen 5</div>
       <div class="stand"></div>
     </div>
 
-    <div class="screen wow fadeIn"
+    <div
+        id="gscreen-6"
+        class="screen wow fadeIn"
         data-wow-delay=".3s">
-      <div class="pres content"></div>
-      <div class="label">Greenscreen 2</div>
+      <div class="weather content"></div>
+      <div class="alert"></div>
+      <div class="label">Greenscreen 6</div>
       <div class="stand"></div>
     </div>
 
-    <div class="screen wow fadeIn"
-         data-wow-delay=".6s">
+    <div
+        id="gscreen-7"
+        class="screen wow fadeIn"
+        data-wow-delay=".6s">
       <div class="meta content"></div>
-      <div class="label">Greenscreen 3</div>
+      <div class="alert"></div>
+      <div class="label">Greenscreen 7</div>
       <div class="stand"></div>
     </div>
 

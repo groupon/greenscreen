@@ -1,0 +1,15 @@
+select {
+  background: transparent;
+  width: 268px;
+  height: 50px;
+  padding: 12px;
+  font-size: 1.2em;
+  line-height: 1;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 0;
+  -webkit-appearance: none;
+
+  &:focus {
+    outline: none;
+  }
+}

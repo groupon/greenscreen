@@ -1,0 +1,56 @@
+$green: rgb(46, 204, 113);
+$red: rgb(231, 76, 60);
+$blue: rgb(52, 152, 219);
+$tv-color: #282828;
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin bold() {
+  font-weight: 700;
+}
+
+button.push {
+  background: white;
+  color: $green;
+  min-width: 300px;
+  padding: 20px;
+  font-size: 1.5em;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  border: none;
+  border-bottom: 6px solid #e1e1e1;
+
+  @include border-radius(2px);
+
+  &:active {
+    margin-top: 6px;
+    border-bottom: 0;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &.red {
+    background: $red;
+    color: white;
+    border-color: lighten($red, 10);
+  }
+
+  &.blue {
+    background: $blue;
+    color: white;
+    border-color: lighten($blue, 10);
+  }
+
+  &.white {
+    background: white;
+    color: $green;
+  }
+}
