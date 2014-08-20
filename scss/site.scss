@@ -80,7 +80,8 @@ html {
       @include transition-all(.2s);
 
       &.nyan {
-        background: red !important;
+        background: url(../assets/images/nyan.gif) no-repeat center center !important;
+        background-size: cover;
       }
 
       &.weather {

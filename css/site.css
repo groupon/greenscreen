@@ -91,7 +91,8 @@ html {
       -o-transition: all 0.2s;
       transition: all 0.2s; }
       .screens .screen .content.nyan {
-        background: red !important; }
+        background: url(../assets/images/nyan.gif) no-repeat center center !important;
+        background-size: cover; }
       .screens .screen .content.weather {
         background: grey; }
       .screens .screen .content.stocks {
