@@ -94,16 +94,24 @@ html {
       .screens .screen .content.nyan {
         background: url(../assets/images/nyan.gif) no-repeat center center !important;
         background-size: cover; }
+      .screens .screen .content.feed {
+        background: url(../assets/images/feed.png) no-repeat center center;
+        background-size: cover; }
       .screens .screen .content.weather {
-        background: #1abc9c; }
+        background: url(../assets/images/weather.png) no-repeat center center;
+        background-size: cover; }
       .screens .screen .content.stocks {
-        background: #9b59b6; }
+        background: url(../assets/images/stocks.png) no-repeat center center;
+        background-size: cover; }
       .screens .screen .content.news {
-        background: #e67e22; }
+        background: url(../assets/images/news.png) no-repeat center center;
+        background-size: cover; }
       .screens .screen .content.analytics {
-        background: #3498db; }
+        background: url(../assets/images/analytics.png) no-repeat center center;
+        background-size: cover; }
       .screens .screen .content.meta {
-        background: #34495e; }
+        background: url(../assets/images/meta.png) no-repeat center center;
+        background-size: cover; }
     .screens .screen .alert {
       display: none;
       position: absolute;

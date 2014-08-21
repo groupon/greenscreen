@@ -92,24 +92,34 @@ html {
         background-size: cover;
       }
 
+      &.feed {
+        background: url(../assets/images/feed.png) no-repeat center center;
+        background-size: cover;
+      }
+
       &.weather {
-        background: $turqoise;
+        background: url(../assets/images/weather.png) no-repeat center center;
+        background-size: cover;
       }
 
       &.stocks {
-        background: $amethyst;
+        background: url(../assets/images/stocks.png) no-repeat center center;
+        background-size: cover;
       }
 
       &.news {
-        background: $carrot;
+        background: url(../assets/images/news.png) no-repeat center center;
+        background-size: cover;
       }
 
       &.analytics {
-        background: $blue;
+        background: url(../assets/images/analytics.png) no-repeat center center;
+        background-size: cover;
       }
 
       &.meta {
-        background: $wet-asphalt;
+        background: url(../assets/images/meta.png) no-repeat center center;
+        background-size: cover;
       }
 
     }
