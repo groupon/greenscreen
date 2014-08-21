@@ -26,7 +26,6 @@ function change(num, value){
 }
 
 $(document).ready(function(){
-  new WOW().init();
 
   $('select.channel').change(function(e){
     var value = e.target.value;
@@ -34,3 +33,5 @@ $(document).ready(function(){
   })
 
 });
+
+new WOW().init();
