@@ -87,38 +87,15 @@ html {
 
       @include transition-all(.2s);
 
+      @each $background in feed, weather, stocks, news, analytics, meta {
+        &.#{$background} {
+          background: url('../assets/images/#{$background}.png') no-repeat center center;
+          background-size: cover;
+        }
+      };
+
       &.nyan {
         background: url(../assets/images/nyan.gif) no-repeat center center !important;
-        background-size: cover;
-      }
-
-      &.feed {
-        background: url(../assets/images/feed.png) no-repeat center center;
-        background-size: cover;
-      }
-
-      &.weather {
-        background: url(../assets/images/weather.png) no-repeat center center;
-        background-size: cover;
-      }
-
-      &.stocks {
-        background: url(../assets/images/stocks.png) no-repeat center center;
-        background-size: cover;
-      }
-
-      &.news {
-        background: url(../assets/images/news.png) no-repeat center center;
-        background-size: cover;
-      }
-
-      &.analytics {
-        background: url(../assets/images/analytics.png) no-repeat center center;
-        background-size: cover;
-      }
-
-      &.meta {
-        background: url(../assets/images/meta.png) no-repeat center center;
         background-size: cover;
       }
 

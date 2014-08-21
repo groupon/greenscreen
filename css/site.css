@@ -91,26 +91,26 @@ html {
       -ms-transition: all 0.2s;
       -o-transition: all 0.2s;
       transition: all 0.2s; }
-      .screens .screen .content.nyan {
-        background: url(../assets/images/nyan.gif) no-repeat center center !important;
-        background-size: cover; }
       .screens .screen .content.feed {
-        background: url(../assets/images/feed.png) no-repeat center center;
+        background: url("../assets/images/feed.png") no-repeat center center;
         background-size: cover; }
       .screens .screen .content.weather {
-        background: url(../assets/images/weather.png) no-repeat center center;
+        background: url("../assets/images/weather.png") no-repeat center center;
         background-size: cover; }
       .screens .screen .content.stocks {
-        background: url(../assets/images/stocks.png) no-repeat center center;
+        background: url("../assets/images/stocks.png") no-repeat center center;
         background-size: cover; }
       .screens .screen .content.news {
-        background: url(../assets/images/news.png) no-repeat center center;
+        background: url("../assets/images/news.png") no-repeat center center;
         background-size: cover; }
       .screens .screen .content.analytics {
-        background: url(../assets/images/analytics.png) no-repeat center center;
+        background: url("../assets/images/analytics.png") no-repeat center center;
         background-size: cover; }
       .screens .screen .content.meta {
-        background: url(../assets/images/meta.png) no-repeat center center;
+        background: url("../assets/images/meta.png") no-repeat center center;
+        background-size: cover; }
+      .screens .screen .content.nyan {
+        background: url(../assets/images/nyan.gif) no-repeat center center !important;
         background-size: cover; }
     .screens .screen .alert {
       display: none;
