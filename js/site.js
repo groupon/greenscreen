@@ -1,10 +1,14 @@
 function takeover(){
-  var $content = $('.screen .content');
+  var $content = $('.screen .content'),
+      audio = $('audio')[0];
 
   $content.addClass('nyan');
+  audio.play();
 
   setTimeout(function(){
     $content.removeClass('nyan');
+    audio.pause();
+    audio.currentTime = 0;
   }, 10000)
 }
 
