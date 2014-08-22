@@ -203,4 +203,7 @@ footer {
   text-align: center;
   font-size: 1.3em; }
 
+footer a {
+  text-decoration: none;
+}
 /*# sourceMappingURL=site.css.map */
