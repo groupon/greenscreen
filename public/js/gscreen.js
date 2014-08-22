@@ -485,12 +485,18 @@
     });
   });
   require.define('/src/client/controllers/screen.coffee', function (module, exports, __dirname, __filename) {
-    angular.module('GScreen').controller('Screen', function ($scope, $sce, $location, Channel) {
+    angular.module('GScreen').controller('Screen', function ($scope, $sce, $location, Channel, sockets) {
       var id, lastTimeoutId, mainContentUrlCounter, rotateMainContentUrl;
       id = $location.url().match(/\/channels\/([^\/\?]+)/)[1];
       $scope.channel = Channel.get(id);
       $scope.channel.$promise.then(function (channel) {
         return setTimeout(rotateMainContentUrl, 0);
+      });
+      sockets.on('channel-updated', function (channel) {
+        if (channel.id === $scope.channel.id) {
+          $scope.channel = channel;
+          return setTimeout(rotateMainContentUrl, 0);
+        }
       });
       mainContentUrlCounter = 0;
       lastTimeoutId = null;
