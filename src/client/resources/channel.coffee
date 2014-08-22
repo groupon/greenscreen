@@ -16,8 +16,6 @@ angular.module("GScreen").factory "Channel", ($resource) ->
   resource = $resource "/api/channels/:id", null,
     update:
       method: "PUT"
-    remove:
-      method: "DELETE"
 
   get: (id) ->
     resource.get id: id

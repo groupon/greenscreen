@@ -1,3 +1,4 @@
+
 ###
 Copyright (c) 2014, Groupon
 All rights reserved.
@@ -13,24 +14,28 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.###
 
 pathLib = require "path"
-Alert = require "./alert"
-Channel = require "./channel"
-Receiver = require "./receiver"
-Takeover = require "./takeover"
+express = require "express"
+Alert = require "../models/alert"
+Channel = require "../models/channel"
+Receiver = require "../models/receiver"
+Takeover = require "../models/takeover"
 
 module.exports = (app, sockets) ->
+
+  router = express.Router()
+
   addResources = (basePath, resourceClass) ->
-    app.get "#{basePath}", (req, res) ->
+    router.get "#{basePath}", (req, res) ->
       resourceClass.all (err, resources) ->
         if err then res.send err else res.send resources
 
-    app.get "#{basePath}/:id", (req, res) ->
+    router.get "#{basePath}/:id", (req, res) ->
       resourceClass.findById req.param("id"), (err, resource) ->
         return res.status(404).send(null) if err && err.error == "not_found"
         return res.status(500).send(err) if err
         res.send resource
 
-    app.post "#{basePath}", (req, res) ->
+    router.post "#{basePath}", (req, res) ->
       data = req.body
       resource = new resourceClass(data)
       resource.save (err) ->
@@ -38,7 +43,7 @@ module.exports = (app, sockets) ->
         sockets.emit "#{resourceClass.type}-created", resource
         res.send resource
 
-    app.put "#{basePath}/:id", (req, res) ->
+    router.put "#{basePath}/:id", (req, res) ->
       resourceClass.findById req.param("id"), (err, resource) ->
         return res.status(404).send(null) if err && err.error == "not_found"
         return res.status(500).send(err) if err
@@ -47,7 +52,7 @@ module.exports = (app, sockets) ->
           sockets.emit "#{resourceClass.type}-updated", resource
           res.send resource
 
-    app.delete "#{basePath}/:id", (req, res) ->
+    router.delete "#{basePath}/:id", (req, res) ->
       resourceClass.findById req.param("id"), (err, resource) ->
         return res.status(404).send(null) if err && err.error == "not_found"
         return res.status(500).send(err) if err
@@ -57,13 +62,13 @@ module.exports = (app, sockets) ->
           res.send status: "success"
 
   addResource = (basePath, resourceClass, id) ->
-    app.get "#{basePath}", (req, res) ->
+    router.get "#{basePath}", (req, res) ->
       resourceClass.findById id, (err, resource) ->
         return res.status(404).send(null) if err && err.error == "not_found"
         return res.status(500).send(err) if err
         res.send resource
 
-    app.post "#{basePath}", (req, res) ->
+    router.post "#{basePath}", (req, res) ->
       data = req.body
       data.id = id
       resource = new resourceClass(data)
@@ -72,7 +77,7 @@ module.exports = (app, sockets) ->
         sockets.emit "#{resourceClass.type}-created", resource
         res.send resource
 
-    app.put "#{basePath}", (req, res) ->
+    router.put "#{basePath}", (req, res) ->
       resourceClass.findById id, (err, resource) ->
         return res.status(404).send(null) if err && err.error == "not_found"
         return res.status(500).send(err) if err
@@ -81,7 +86,7 @@ module.exports = (app, sockets) ->
           sockets.emit "#{resourceClass.type}-updated", resource
           res.send resource
 
-    app.post "#{basePath}/remove", (req, res) ->
+    router.delete "#{basePath}", (req, res) ->
       resourceClass.findById id, (err, resource) ->
         return res.status(404).send(null) if err && err.error == "not_found"
         return res.status(500).send(err) if err
@@ -90,23 +95,9 @@ module.exports = (app, sockets) ->
           sockets.emit "#{resourceClass.type}-deleted", resource
           res.send status: "success"
 
-  addResources "/api/alerts", Alert
-  addResources "/api/channels", Channel
-  addResources "/api/receivers", Receiver
-  addResource "/api/takeover", Takeover, "takeover-singleton"
+  addResources "/alerts", Alert
+  addResources "/channels", Channel
+  addResources "/receivers", Receiver
+  addResource "/takeover", Takeover, "takeover-singleton"
 
-  app.get "/chromecasts/new", (req, res) ->
-    res.sendfile pathLib.resolve("#{__dirname}/../../public/index.html")
-
-  app.get "/chromecasts/:id", (req, res) ->
-    res.sendfile pathLib.resolve("#{__dirname}/../../public/setup-chromecast.html")
-
-  app.get "/channels/new", (req, res) ->
-    res.sendfile pathLib.resolve("#{__dirname}/../../public/index.html")
-
-  app.get "/channels/:id", (req, res) ->
-    res.sendfile pathLib.resolve("#{__dirname}/../../public/channel.html")
-
-  # Wildcard all GET routes, send to the Angular app
-  app.get "*", (req, res) ->
-    res.sendfile pathLib.resolve("#{__dirname}/../../public/index.html")
+  app.use('/api', router)

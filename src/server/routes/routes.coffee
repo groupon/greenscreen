@@ -12,24 +12,21 @@ Redistribution and use in source and binary forms, with or without modification,
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.###
 
-Model = require "./model"
-db = require "./db"
+pathLib = require "path"
 
-module.exports = class Alert extends Model
-  @type: "alert"
+module.exports = (app) ->
+  app.get "/chromecasts/new", (req, res) ->
+    res.sendfile pathLib.resolve("#{__dirname}/../../../public/index.html")
 
-  @forReceiver: (receiver, cb) ->
-    db.allWithType @type, (err, docs) ->
-      return cb(err) if err
-      return cb(null, null) if docs.length == 0
-      doc = docs[docs.length - 1]
-      cb null, doc
+  app.get "/chromecasts/:id", (req, res) ->
+    res.sendfile pathLib.resolve("#{__dirname}/../../../public/setup-chromecast.html")
 
-  constructor: (data={}) ->
-    @type = "alert"
-    @id = data.id || data._id
-    @rev = data._rev
-    @style = data.style || "default"
-    @duration = data.duration || 60
-    @text = data.text
-    @expiresAt = data.expiresAt
+  app.get "/channels/new", (req, res) ->
+    res.sendfile pathLib.resolve("#{__dirname}/../../../public/index.html")
+
+  app.get "/channels/:id", (req, res) ->
+    res.sendfile pathLib.resolve("#{__dirname}/../../../public/channel.html")
+
+  # Wildcard all GET routes, send to the Angular app
+  app.get "*", (req, res) ->
+    res.sendfile pathLib.resolve("#{__dirname}/../../../public/index.html")

@@ -12,30 +12,41 @@ Redistribution and use in source and binary forms, with or without modification,
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.###
 
-http = require "http"
-express = require "express"
-morgan = require "morgan"
-bodyParser = require "body-parser"
-methodOverride = require "method-override"
-config = require "./config"
-api = require("./routes/api")
-routes = require "./routes/routes"
-socketIO = require "socket.io"
+db = require "../db"
+_ = require "underscore"
 
-app = express()
-server = http.createServer app
-sockets = socketIO(server)
+module.exports = class Model
+  @all: (cb) ->
+    db.allWithType @type, (err, docs) =>
+      return cb(err) if err
+      channels = docs.map (doc) => new this(doc)
+      cb(null, channels)
 
-app.use morgan('dev')
-app.use bodyParser.urlencoded
-  extended: true
-app.use bodyParser.json()
-app.use methodOverride()
-app.use express.static("#{__dirname}/../../public")
+  @findById: (id, cb) ->
+    db.get id, (err, doc) =>
+      return cb(err) if err
+      cb(null, new this(doc))
 
-api(app, sockets)
-routes(app)
+  save: (cb=->) ->
+    attrs = {}
+    for own k,v of this
+      if !_(["id", "rev"]).contains(k) && !/^\$/.test k
+        attrs[k] = v
+    if @id
+      db.save @id, @rev, attrs, (err, res) ->
+        return cb(err) if err
+        @rev = res.rev
+        cb()
+    else
+      db.save attrs, (err, res) =>
+        return cb(err) if err
+        @id = res.id
+        @rev = res.rev
+        cb()
 
-port = process.env.PORT || config.server?.port || 4994
-server.listen port
-console.log "GScreen is listening to localhost:#{port}"
+  update: (data, cb=->) ->
+    this[k] = v for k,v of data
+    @save(cb)
+
+  destroy: (cb=->) ->
+    db.remove @id, @rev, cb

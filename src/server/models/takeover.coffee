@@ -14,7 +14,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 _ = require "underscore"
 Model = require "./model"
-db = require "./db"
+db = require "../db"
 
 module.exports = class Takeover extends Model
   @type: "takeover"

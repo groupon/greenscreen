@@ -16,9 +16,6 @@ angular.module("GScreen").factory "Takeover", ($resource) ->
   resource = $resource "/api/takeover", null,
     update:
       method: "PUT"
-    remove:
-      method: "POST"
-      url: "/api/takeover/remove"
 
   get: (id) ->
     resource.get()
