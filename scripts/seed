@@ -1,7 +1,7 @@
 #!/usr/bin/env coffee
 
-Channel = require("../src/server/channel")
-Receiver = require("../src/server/receiver")
+Channel = require("../src/server/models/channel")
+Receiver = require("../src/server/models/receiver")
 db = require("../src/server/db")
 
 new Channel({name: "Channel 1"}).save()
