@@ -12,7 +12,7 @@ Built with Angular.js, Node.js, Express.js, and CouchDB.
 
 On the homepage, you will find several options currently at your disposal, namely:
 
-- Chromcasts
+- Chromecasts
 - Channels
 - Alerts
 - Channel Takeover
@@ -47,7 +47,7 @@ You can also preview what that Chromecast is tuning into, by clicking 'Preview.'
 You will be prompted by the Google Cast extension to select a Chromecast. Select one of the available devices.
 This will automatically populate the 'Name' field with the name of the Chromecast. 
 
-Describe the location of the Chromcast in the 'Location' field.
+Describe the location of the Chromecast in the 'Location' field.
 
 From the dropdown, select the channel that you want that chromecast to view.
 
@@ -117,7 +117,7 @@ For OS X, you can find your local IP in System Preferences > Network, and will g
 Along with registering your Chromecast Application, you will need to register your Chromecasts. This is done through the
 [Google Cast SDK Developer Console](https://cast.google.com/publish).
 
-Serial numbers can be found on the back of your Chromcast. Once registration is complete, make sure to reboot your devices, which
+Serial numbers can be found on the back of your Chromecast. Once registration is complete, make sure to reboot your devices, which
 can be done through the Chromecast Desktop Application.
 
 ### Setting up your Chromecasts
@@ -222,7 +222,7 @@ Make sure that you are able to see your Chromecast(s) in the Google Cast extensi
 most likely an error with your extension, or your connection.
 
 - Check that your Chromecast and your local development server are on the same Wi-Fi network
-- Try rebooting your Chromcasts through the desktop applications or manually, and reconnecting them.
+- Try rebooting your Chromecasts through the desktop applications or manually, and reconnecting them.
 - Try restarting your Chrome browser (Completely quit the application and re-open)
 
 **When all else fails, reboot your chromecasts, and restart Chrome.**
