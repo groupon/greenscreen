@@ -241,7 +241,7 @@ footer {
     padding: 2em;
   }
   section#splash header .title {
-    font-size: 3em;
+    font-size: 2em;
   }
   section#splash header .subtitle {
     font-size: 1.5em;
@@ -256,5 +256,8 @@ footer {
   section#final header .title {
     font-size: 1.5em;
     line-height: 1.3;
+  }
+  footer {
+    font-size: 1em;
   }
 }
