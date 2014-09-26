@@ -71,10 +71,10 @@ html {
     display: inline-block;
     position: relative;
     background: $tv-color;
-    height: 25vh;
+    height: auto;
     width: 25%;
-    min-width: 25vh;
-    min-height: 200px;
+    min-width: 200px;
+    min-height: 150px;
     margin: $gutter;
     border: 8px solid $tv-color;
     @include border-radius(4px);
@@ -233,5 +233,31 @@ footer {
 
   a {
     text-decoration: none;
+  }
+}
+
+@media (max-width: 650px) {
+  section {
+    padding: 2em;
+  }
+  section#splash header .title {
+    font-size: 2em;
+  }
+  section#splash header .subtitle {
+    font-size: 1.5em;
+  }
+  button.push {
+    min-width: 0;
+    padding: 10px 20px;
+    font-size: 1.25em;
+  }
+  section#channels header .title,
+  section#mass-actions header .title,
+  section#final header .title {
+    font-size: 1.5em;
+    line-height: 1.3;
+  }
+  footer {
+    font-size: 1em;
   }
 }
