@@ -18,7 +18,7 @@
     <div class="template-full-screen widescreen">
       <div class="main-window">
         <h1 ng-hide="channelUrl">Setting Up Chromecast</h1>
-        <iframe ng-show="channelUrl" src="{{ channelUrl }}"></iframe>
+        <iframe ng-show="channelUrl" src="{{ channelUrl }}" frameborder="0" framespacing="0"></iframe>
 
         <div ng-show="chromecast.alert" class="alert {{ chromecast.alert.style }}">{{ chromecast.alert.text }}</div>
 
