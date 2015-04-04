@@ -1,6 +1,6 @@
 {
-  "name": "gscreen",
-  "version": "0.0.0",
+  "name": "greenscreen",
+  "version": "0.1.0",
   "description": "Digital signage using Google Chromecast",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.groupondev.com:cpowers/gscreen.git"
+    "url": "https://github.com/groupon/greenscreen.git"
   },
   "author": "Chris Powers <chrisjpowers@gmail.com>",
   "contributors": [
