@@ -153,7 +153,7 @@ Start up couchdb with:
 couchdb
 ```
 
-Start the server with:
+Start the server (make sure you've installed the dependencies, see above section 'Installing Dependencies'):
 
 ```
 npm start
