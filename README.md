@@ -112,6 +112,8 @@ http://<YOUR-LOCAL-IP>:4994/setup-chromecast.html
 
 For OS X, you can find your local IP in System Preferences > Network, and will generally begin with `192.`
 
+You may notice your newly created chromecast application will be in the 'Unpublished' state. This is expected, and your chromecast's will still be able to get to the app as long as they're registered (which is covered in the following section).
+
 ### Registering your Chromecasts
 
 Along with registering your Chromecast Application, you will need to register your Chromecasts. This is done through the
