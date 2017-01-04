@@ -3,3 +3,4 @@ node_modules
 npm-debug.log
 config.json
 public/js/gscreen-config.js
+test/log

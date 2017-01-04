@@ -25,7 +25,7 @@ module.exports = (newDoc, oldDoc, usrCtx) ->
   return if newDoc._deleted
 
   unless newDoc.type
-    raise "missing type", "all documents must have a type"
+    raise "missing type", "all documents must have a type: #{JSON.stringify(newDoc)}"
 
   if oldDoc && newDoc.type != oldDoc.type
     raise "invalid value", "cannot change a document's type"
@@ -37,5 +37,8 @@ module.exports = (newDoc, oldDoc, usrCtx) ->
 
   requiredFields = requiredFieldsMap[newDoc.type] || []
   for field in requiredFields
-    raise "missing field", "documents with type='#{newDoc.type}' requires a '#{field}' value" unless newDoc[field]?
+    continue if newDoc[field]?
+    baseMessage = "documents with type='#{newDoc.type}' requires a '#{field}' value"
+    raise "missing field", "#{baseMessage}: #{JSON.stringify(newDoc)}" unless newDoc[field]?
 
+  null # No implicit return

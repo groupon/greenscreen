@@ -14,12 +14,12 @@
     <tbody>
       <tr ng-repeat="channel in channels">
         <td>
-          <a href="/channels/{{ channel.id }}/edit" name='{{ channel.name }}' id='{{ channel.id }}' class="channel-link">
+          <a href="/channels/{{ channel.id }}/edit" name='{{ channel.name }}' id='channel-{{ channel.id }}' class="channel-link">
             {{ channel.name }}
           </a>
         </td>
         <td>
-          <a href="/channels/{{ channel.id }}" id='{{ channel.id }}-preview' class="channel-preview" target="_blank" >
+          <a href="/channels/{{ channel.id }}" id='preview-{{ channel.id }}' class="channel-preview" target="_blank" >
             Preview
           </a>
         </td>

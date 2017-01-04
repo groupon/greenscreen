@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - '4'
+  - '6'
+services:
+  - couchdb
+before_script:
+  - 'npm run create-config'
+before_deploy:
+  - 'git config --global user.email "opensource@groupon.com"'
+  - 'git config --global user.name "Groupon"'

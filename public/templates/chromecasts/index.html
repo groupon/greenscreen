@@ -15,7 +15,7 @@
     <tbody>
       <tr ng-repeat="chromecast in chromecasts">
         <td>
-          <a href="/chromecasts/{{ chromecast.id }}/edit" id="{{ chromecast.id }}" name="{{ chromecast.name }}">
+          <a href="/chromecasts/{{ chromecast.id }}/edit" id="rec-{{ chromecast.id }}" name="{{ chromecast.name }}">
             {{ chromecast.name }}
           </a>
           <br>
@@ -28,7 +28,7 @@
         </td>
         <td>
           <span ng-show="false" class="icon-cancel non-editable"></span>
-          <a ng-show="true" href="/chromecasts/{{ chromecast.id }}" target="_blank" id="{{ chromecast.id }}-preview"> Preview </a>
+          <a ng-show="true" href="/chromecasts/{{ chromecast.id }}" target="_blank" id="preview-{{ chromecast.id }}"> Preview </a>
         </td>
       </tr>
     </tbody>
