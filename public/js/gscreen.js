@@ -541,6 +541,7 @@
         return castAway.connect(function (err, s) {
           if (err)
             return console.log('ERR', err);
+          s.session.leave();
           session = s;
           return $scope.$apply(function () {
             return $scope.chromecast.name = session.session.receiver.friendlyName;

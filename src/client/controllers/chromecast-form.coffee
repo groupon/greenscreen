@@ -21,6 +21,7 @@ angular.module("GScreen").controller "ChromecastForm", ($scope, $routeParams, $l
   connect = ->
     castAway.connect (err, s) ->
       return console.log "ERR", err if err
+      s.session.leave()
       session = s
       $scope.$apply ->
         $scope.chromecast.name = session.session.receiver.friendlyName
