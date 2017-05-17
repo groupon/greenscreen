@@ -18,24 +18,29 @@ angular.module("GScreen").controller "ChromecastForm", ($scope, $routeParams, $l
 
   session = null
 
-  connect = ->
+  connect = (leave) ->
     castAway.connect (err, s) ->
       return console.log "ERR", err if err
-      s.session.leave()
+      s.session.leave() if leave
       session = s
       $scope.$apply ->
         $scope.chromecast.name = session.session.receiver.friendlyName
 
+  # new chromecast: do not 'leave' the session after it is selected,
+  # since the chromecast needs to be configured after the save using the 'setChromecastId' message.
   if !$routeParams.id
-    connect()
+    connect(false)
 
+  # release the session after the reconnection occurs
   $scope.reconnect = ->
-    connect()
+    connect(true)
 
   $scope.onFormSubmit = ->
     Chromecast.save $scope.chromecast, (chromecast) ->
       flash.message "Your changes to '#{$scope.chromecast.name}' have been saved."
-      session.send "setChromecastId", chromecast.id if session
+      if session
+        session.send "setChromecastId", chromecast.id, ->
+          session.session.leave()
       $location.url "/chromecasts"
 
   $scope.deleteChannel = ->

@@ -537,11 +537,12 @@
       $scope.chromecast = $routeParams.id ? Chromecast.get($routeParams.id) : {};
       $scope.channels = Channel.query();
       session = null;
-      connect = function () {
+      connect = function (leave) {
         return castAway.connect(function (err, s) {
           if (err)
             return console.log('ERR', err);
-          s.session.leave();
+          if (leave)
+            s.session.leave();
           session = s;
           return $scope.$apply(function () {
             return $scope.chromecast.name = session.session.receiver.friendlyName;
@@ -549,15 +550,17 @@
         });
       };
       if (!$routeParams.id)
-        connect();
+        connect(false);
       $scope.reconnect = function () {
-        return connect();
+        return connect(true);
       };
       $scope.onFormSubmit = function () {
         return Chromecast.save($scope.chromecast, function (chromecast) {
           flash.message("Your changes to '" + $scope.chromecast.name + "' have been saved.");
           if (session)
-            session.send('setChromecastId', chromecast.id);
+            session.send('setChromecastId', chromecast.id, function () {
+              return session.session.leave();
+            });
           return $location.url('/chromecasts');
         });
       };
